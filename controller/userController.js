@@ -1,11 +1,11 @@
 const { json } = require('sequelize');
 const User=require('../models/UserModel')
+const bcrypt = require("bcrypt");
 
-
-const getUserByUsername=async(req,res)=>{
+const getUserByEmail=async(req,res)=>{
    try{
-    const {username}=req.body;
-    const foundUser= await User.findByPk(username);
+    const {email}=req.body;
+    const foundUser= await User.findByPk(email);
     if(!foundUser){
         res.status(404).send("User not registered");
     }
@@ -16,30 +16,33 @@ const getUserByUsername=async(req,res)=>{
    }
 }
 
+
+const SALT_ROUNDS = 10; 
 const postUser = async (req, res) => {
-   try {
-     const { username, password, email } = req.body;
- 
-    
-     if (!username || !password || !email) {
-       return res.status(400).json({ message: "Username, password, and email are required." });
-     }
- 
-    
-     const existingUser = await User.findOne({ where: { email } });
-     if (existingUser) {
-       return res.status(409).json({ message: "User with this email already exists." });
-     }
- 
-     
-     const createdUser = await User.create({ username, password, email });
- 
-     res.status(201).json(createdUser); 
-   } catch (e) {
-     res.status(500).json({ message: e.message });
-   }
- };
+  try {
+    const { email, password } = req.body;
+
+    if (!password || !email) {
+      return res.status(400).json({ message: "Email and password are required." });
+    }
+
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(409).json({ message: "User with this email already exists." });
+    }
+
+    // blowfish encryption
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
+    const createdUser = await User.create({ email, password: hashedPassword });
+
+    res.status(200).json({ message: "User created successfully", user: createdUser });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
  
 
 
-module.exports={getUserByUsername,postUser};
+module.exports={getUserByEmail,postUser};

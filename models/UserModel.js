@@ -5,15 +5,10 @@ const sequelize=require('../utils/dbConnection');
 
 const User=sequelize.define('user',{
    
-    username:{
+    email:{
         type:DataTypes.STRING,
         allowNull:false,
         primaryKey:true,
-        
-    },
-    email:{
-        type:DataTypes.STRING,
-        allowNull:false
     },
     password:{
         type:DataTypes.STRING,
