@@ -4,14 +4,18 @@ const app= express();
 const db= require('./utils/dbConnection');
 const userRoute= require('./routes/userRoute')
 const loginRoute=require('./routes/loginRoute')
+const expenseRoute=require('./routes/expenseRoute')
 
-const userModel= require('./models/UserModel')
+//const userModel= require('./models/UserModel')
+
+require('./models')
 
 app.use(cors());
 app.use(express.json());
 
 app.use('/user',userRoute);
 app.use('/login',loginRoute);
+app.use('/expense',expenseRoute)
 
 
 db.sync({force:true}).then(()=>{
