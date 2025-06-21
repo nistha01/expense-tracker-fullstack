@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useAuth } from "./authContext"; 
 
 const Authentication = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
+  const { login } = useAuth(); 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -11,21 +13,26 @@ const Authentication = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = isLogin ? "http://localhost:5000/login" : "http://localhost:5000/register";
+    const url = isLogin
+      ? "http://localhost:3001/login/findUserForLogin"
+      : "http://localhost:3001/user/postUser";
 
     try {
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setMessage(data.message);
+        setMessage(data.message || "Success");
+        if (isLogin && data.user) {
+          login(data.user); // Save to context and sessionStorage
+        }
       } else {
-        setMessage(data.message);
+        setMessage(data.message || "Error occurred");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -38,10 +45,10 @@ const Authentication = () => {
       <h2>{isLogin ? "Login" : "Signup"}</h2>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
           onChange={handleChange}
           required
           style={{ margin: "5px" }}
@@ -59,7 +66,9 @@ const Authentication = () => {
         <br />
         <button type="submit">{isLogin ? "Login" : "Signup"}</button>
       </form>
-      {message && <p style={{ marginTop: "10px", color: "green" }}>{message}</p>}
+      {message && (
+        <p style={{ marginTop: "10px", color: "green" }}>{message}</p>
+      )}
       <p
         onClick={() => {
           setIsLogin(!isLogin);
@@ -67,7 +76,9 @@ const Authentication = () => {
         }}
         style={{ cursor: "pointer", color: "blue", marginTop: "10px" }}
       >
-        {isLogin ? "Don't have an account? Signup" : "Already have an account? Login"}
+        {isLogin
+          ? "Don't have an account? Signup"
+          : "Already have an account? Login"}
       </p>
     </div>
   );

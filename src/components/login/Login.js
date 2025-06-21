@@ -11,7 +11,7 @@ const AuthApp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = isLogin ? "http://localhost:5000/login" : "http://localhost:5000/register";
+    const url = isLogin ? "http://localhost:3001/login/findUserForLogin" : "http://localhost:3001/user/postUser";
 
     try {
       const response = await fetch(url, {
