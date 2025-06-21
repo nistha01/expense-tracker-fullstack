@@ -28,7 +28,7 @@ const findUserByEmailPassword = async (req, res) => {
       console.error(e);
       res.status(500).json({ message: e.message });
     }
-  };
+};
 
 
 module.exports={findUserByEmailPassword}

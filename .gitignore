@@ -1,0 +1,60 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.*
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Sequelize migration logs
+.sequelize*
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Build output
+dist/
+build/
+
+# Optional coverage directory
+coverage/
+
+# Cashfree credentials backup (if any)
+cashfreeConfig.js
+cashfree_config.json
+
+# IDE files
+.idea/
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Temp files
+tmp/
+temp/
+
+# Debug logs
+debug.log
+
+# PM2 logs
+pids/
+*.pid
+*.seed
+*.pid.lock
