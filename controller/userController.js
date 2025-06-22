@@ -42,7 +42,31 @@ const postUser = async (req, res) => {
   }
 };
 
+
+//update user's password
+
+const updatePassowrd=async(req,res)=>{
+ try{
+   const {email,password}= req.body;
+
+  if(!email || !password){
+    return res.status(400).json({ message: "Email and password are required." });
+  }
+   const existingUser = await User.findOne({ where: { email } });
+    if (!existingUser) {
+      return res.status(409).json({ message: "User with this email does not exists." });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+    existingUser.password=hashedPassword;
+    existingUser.save();
+
+ }catch(e){
+  res.status(500).json({ message: e.message });
+ }
+}
+
  
 
 
-module.exports={getUserByEmail,postUser};
+module.exports={getUserByEmail,postUser,updatePassowrd};

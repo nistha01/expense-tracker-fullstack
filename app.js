@@ -23,8 +23,8 @@ app.use(express.json({
 
 app.use('/user',userRoute);
 app.use('/login',loginRoute);
-app.use('/expense',expenseRoute)
-app.use('/order',orderRoute)
+app.use('/expense',expenseRoute);
+app.use('/order',orderRoute);
 
 
 db.sync({force:true}).then(()=>{
