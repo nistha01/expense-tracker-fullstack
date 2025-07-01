@@ -16,8 +16,8 @@ const Authentication = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isLogin
-      ? "http://localhost:3001/login/findUserForLogin"
-      : "http://localhost:3001/user/postUser";
+      ? "http://13.51.205.97:3001/login/findUserForLogin"
+      : "http://13.51.205.97:3001/user/postUser";
 
     try {
       const response = await fetch(url, {
@@ -45,7 +45,7 @@ const Authentication = () => {
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3001/forgot-password", {
+      const response = await fetch("http://13.51.205.97:3001/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

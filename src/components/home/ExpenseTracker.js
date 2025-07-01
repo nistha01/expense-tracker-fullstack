@@ -22,7 +22,7 @@ const ExpenseTracker = () => {
     const fetchExpenses = async () => {
       // 1. Fetch expenses
       try {
-        const response = await fetch("http://localhost:3001/expense/get", {
+        const response = await fetch("http://13.51.205.97:3001/expense/get", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ userEmail: user.email })
@@ -40,7 +40,7 @@ const ExpenseTracker = () => {
   
       // 2. Check if user is premium
       try {
-        const response = await fetch(`http://localhost:3001/order/status2/${user.email}`, {
+        const response = await fetch(`http://13.51.205.97:3001/order/status2/${user.email}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" }
         });
@@ -59,13 +59,13 @@ const ExpenseTracker = () => {
   
       // 3. Get orderId and trigger webhook
       try {
-        const resOrderId = await fetch(`http://localhost:3001/order/getOrderIDFromEmail/${user.email}`);
+        const resOrderId = await fetch(`http://13.51.205.97:3001/order/getOrderIDFromEmail/${user.email}`);
         if (resOrderId.ok) {
           const orderIdfetched = await resOrderId.text(); 
           const orderId = JSON.parse(orderIdfetched);
           console.log("Order ID received:", orderId);
   
-          await fetch("http://localhost:3001/order/webhook", {
+          await fetch("http://13.51.205.97:3001/order/webhook", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ orderID: orderId })
@@ -111,7 +111,7 @@ const ExpenseTracker = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:3001/expense/addExpense", {
+      const res = await fetch("http://13.51.205.97:3001/expense/addExpense", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

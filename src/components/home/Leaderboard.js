@@ -23,12 +23,12 @@ const Leaderboard = () => {
     }
     try {
       const maxResponse = await fetch(
-        `http://localhost:3001/expense/getMaxExpense?email=${encodeURIComponent(userEmail)}`
+        `http://13.51.205.97:3001/expense/getMaxExpense?email=${encodeURIComponent(userEmail)}`
       );
       const maxData = await maxResponse.json();
       // Fetch Min Expense
       const minResponse = await fetch(
-        `http://localhost:3001/expense/getMinExpense?email=${encodeURIComponent(userEmail)}`
+        `http://13.51.205.97:3001/expense/getMinExpense?email=${encodeURIComponent(userEmail)}`
       );
       const minData = await minResponse.json();
       // Prepare leaderboard data
